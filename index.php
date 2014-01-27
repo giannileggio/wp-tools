@@ -4,7 +4,7 @@ Plugin Name: WP Tools
 Plugin URI:
 Description: Basic useful tools
 Version: 0.3
-Author: Lucidity Digital
+Author: Giovanni Leggio - Lucidity Digital
 Author URI: http://lucidity.ie
 License:
 */
