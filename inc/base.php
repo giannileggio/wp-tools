@@ -6,6 +6,27 @@ class WP_Tools {
 	var $styles;
 
 	var $logo;
+	
+	/**
+	 * [init description]
+	 * @return true
+	 */
+	function init () {
+
+		add_action( 'init', array( $this,'init_sessions' ), 1 );
+		add_action( 'wp_logout', array( $this,'go_home' ) );
+		add_action( 'wp_head', array( $this,'load_js' ) );
+		add_action( 'wp_head', array( $this,'load_css' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'my_login_logo' ) );
+		add_action( 'init', array( $this, 'check_blog_public') );
+		if($this->is_dev()) {
+			add_action( 'wp_footer', array( $this, 'log_queries') );			
+		}
+
+		add_filter( 'login_headerurl', array( $this,'my_login_logo_url') );
+		add_filter( 'login_headertitle', array( $this,'my_login_logo_url_title') );
+		return true;
+	}
 
 	/*
 	* loads the flexible content template
@@ -17,6 +38,18 @@ class WP_Tools {
 				include(locate_template( 'partials/flexible_contents/' . $layout . ".php" ));				
 			}
 		}
+	}
+
+	function log_queries() {
+		global $wpdb;
+		if ($wpdb->queries) : ?>
+			<script type="text/javascript">
+				jQuery(document).ready(function($) {
+					console.log("Queries : <?php echo count($wpdb->queries); ?>");
+				});
+			</script>
+		<?php 
+		endif;
 	}
 
 	/*
@@ -48,23 +81,6 @@ class WP_Tools {
 	}
 
 
-	/**
-	 * [init description]
-	 * @return true
-	 */
-	function init () {
-
-		add_action( 'init', array( $this,'init_sessions' ), 1 );
-		add_action( 'wp_logout', array( $this,'go_home' ) );
-		add_action( 'wp_head', array( $this,'load_js' ) );
-		add_action( 'wp_head', array( $this,'load_css' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'my_login_logo' ) );
-		add_action( 'init', array( $this, 'check_blog_public') );
-
-		add_filter( 'login_headerurl', array( $this,'my_login_logo_url') );
-		add_filter( 'login_headertitle', array( $this,'my_login_logo_url_title') );
-		return true;
-	}
 
 	/*
 	* checks if the blog is set to be public
