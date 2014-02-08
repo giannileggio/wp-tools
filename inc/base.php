@@ -83,6 +83,7 @@ class WP_Tools {
 
 	function add_mime_types() {
 		$post_mime_types['application/pdf'] = array( __( 'PDFs' ), __( 'Manage PDFs' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'PDFs <span class="count">(%s)</span>' ) );
+		$post_mime_types['image'] = array( __( 'Images' ), __( 'Manage Images' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'Images <span class="count">(%s)</span>' ) );
 		 
     return $post_mime_types;		
 	}
