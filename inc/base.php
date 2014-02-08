@@ -25,6 +25,7 @@ class WP_Tools {
 
 		add_filter( 'login_headerurl', array( $this,'my_login_logo_url') );
 		add_filter( 'login_headertitle', array( $this,'my_login_logo_url_title') );
+		add_filter( 'post_mime_types', array( $this,'add_mime_types') );
 		return true;
 	}
 
@@ -80,6 +81,11 @@ class WP_Tools {
 		}
 	}
 
+	function add_mime_types() {
+		$post_mime_types['application/pdf'] = array( __( 'PDFs' ), __( 'Manage PDFs' ), _n_noop( 'PDF <span class="count">(%s)</span>', 'PDFs <span class="count">(%s)</span>' ) );
+		 
+    return $post_mime_types;		
+	}
 
 
 	/*
